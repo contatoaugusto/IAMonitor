@@ -17,6 +17,27 @@ final class Provider {
       "cursor", "Cursor Agent", "copilot", "GitHub Copilot CLI");
 
   static String name(String id) { return NAMES.getOrDefault(id, id); }
+  static String sessionGuidance(String id) {
+    String login = switch (id) {
+      case "codex" -> "codex";
+      case "claude" -> "claude";
+      case "gemini" -> "gemini (Sign in with Google)";
+      case "cursor" -> "agent login";
+      case "copilot" -> "copilot login";
+      default -> "a CLI escolhida";
+    };
+    String measurement = switch (id) {
+      case "codex" -> "tokens dos turnos concluídos";
+      case "claude" -> "tokens do resultado final";
+      case "gemini" -> "tokens das estatísticas finais";
+      default -> "eventos da execução; a CLI pode não informar tokens";
+    };
+    return "LOGIN  Instale e autentique a CLI no PowerShell: " + login + ".\n"
+        + "EXECUÇÃO  Escolha a pasta e revise o pedido. O IAMonitor iniciará a CLI nessa pasta.\n"
+        + "ACESSO  A CLI usa seu login salvo. O monitor registra eventos locais; não inspeciona o tráfego HTTPS.\n"
+        + "MEDIÇÃO  A fonte é a CLI: " + measurement + ". Tokens não equivalem necessariamente ao gasto da assinatura.";
+  }
+
   static String explanation(String id) {
     String preparation = switch (id) {
       case "codex" -> "No PowerShell, abra 'codex' e conclua o login com a conta desejada.";

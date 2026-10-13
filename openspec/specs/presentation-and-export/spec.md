@@ -13,7 +13,7 @@ O aplicativo MUST identificar a tela principal como visão geral da sessão, com
 - **THEN** o título visível identifica a visão geral da sessão sem usar “bancada”
 
 #### Scenario: Modo de apresentação
-- **WHEN** o usuário ativa Apresentar
+- **WHEN** o usuário ativa “Ampliar visão geral”
 - **THEN** as medidas e gráficos permanecem legíveis com a terminologia atualizada
 
 ### Requirement: Foco na execução em andamento
@@ -94,8 +94,8 @@ O aplicativo MUST mostrar estado, operação, total reportado e gráficos de cic
 - **THEN** a visão mantém o resumo e permite abrir dados detalhados, simulação e exportação
 
 #### Scenario: Modo de apresentação
-- **WHEN** o usuário ativa o modo de apresentação
-- **THEN** a barra lateral é ocultada, a visão geral se expande e o usuário pode voltar ao layout anterior sem interromper a sessão
+- **WHEN** o usuário ativa “Ampliar visão geral”
+- **THEN** a barra lateral é ocultada, a visão geral se expande e o controle oferece “Restaurar painel” sem interromper a sessão
 
 #### Scenario: Vários resultados de uso
 - **WHEN** há mais de um ciclo recente na sessão
@@ -158,3 +158,17 @@ O aplicativo MUST apresentar sua finalidade como acompanhamento e medição de e
 
 - **WHEN** o usuário abre a tela Sobre
 - **THEN** encontra uma descrição do acompanhamento de operações, arquivos identificados e contagens reportadas pela CLI
+
+### Requirement: Navegação direta para análise
+O aplicativo MUST oferecer ação explícita para abrir dados detalhados e simulação.
+
+#### Scenario: Explorar dados e simular
+- **WHEN** o usuário aciona essa ação
+- **THEN** a aba de eventos, origens e simulação é selecionada
+
+### Requirement: Orientação legível na nova sessão
+O aplicativo MUST exibir a orientação de login, acesso e medição como texto sem caixa de edição ou rolagem própria.
+
+#### Scenario: Trocar provedor
+- **WHEN** o usuário escolhe outra IA
+- **THEN** a orientação visível se atualiza

@@ -35,6 +35,7 @@ class DashboardPreviewTest {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     Path project = Files.createDirectory(temp.resolve("project"));
     Files.writeString(project.resolve("AGENTS.md"), "Instruções do projeto.");
+    Files.writeString(project.resolve("pedido.txt"), "Pedido sugerido para teste.");
     Path skill = project.resolve("skills/demo/SKILL.md");
     Path spec = project.resolve("specs/plano.md");
     Path hook = project.resolve("hooks/verificar.ps1");
@@ -71,11 +72,11 @@ class DashboardPreviewTest {
       assertEquals("Sobre o IAMonitor...", holder[0].getJMenuBar().getMenu(0).getItem(2).getText());
       assertNotNull(findButton(holder[0], "Mais ações ▾"));
       SwingUtilities.invokeAndWait(() -> {
-        findButton(holder[0], "Apresentar").doClick();
-        assertEquals("Sair da apresentação", findButton(holder[0], "Sair da apresentação").getText());
+        findButton(holder[0], "Ampliar visão geral").doClick();
+        assertEquals("Restaurar painel", findButton(holder[0], "Restaurar painel").getText());
         assertTrue(!findButton(holder[0], "+ Nova sessão").isShowing());
         save(holder[0], Path.of("target/presentation-preview.png"));
-        findButton(holder[0], "Sair da apresentação").doClick();
+        findButton(holder[0], "Restaurar painel").doClick();
         assertTrue(findButton(holder[0], "+ Nova sessão").isShowing());
       });
       assertTrue(Files.size(Path.of("target/presentation-preview.png")) > 10000);
@@ -98,7 +99,7 @@ class DashboardPreviewTest {
         assertNotNull(findLabel(holder[0], "OPERAÇÃO ATUAL E REGISTRO RECENTE"));
       });
       SwingUtilities.invokeAndWait(() -> {
-        for (String name : List.of("Relatório PDF", "Apresentar", "Mais ações ▾")) {
+        for (String name : List.of("Relatório PDF", "Explorar dados e simular", "Ampliar visão geral", "Mais ações ▾")) {
           JButton button = findButton(holder[0], name);
           assertNotNull(button);
           assertTrue(button.isShowing());
@@ -265,14 +266,14 @@ class DashboardPreviewTest {
       assertNotNull(dialog);
       JDialog opened = dialog;
       SwingUtilities.invokeAndWait(() -> {
-        JTextArea connection = findTextArea(opened);
-        assertNotNull(connection);
-        assertTrue(connection.getText().contains("Não precisa entrar na pasta"));
-        assertTrue(connection.getParent().getHeight() >= 150);
+        assertNotNull(findLabel(opened, "LOGIN, ACESSO E MEDIÇÃO"));
+        assertNotNull(findLabelContaining(opened, "O IAMonitor iniciará a CLI"));
+        assertEquals(findEditableTextArea(opened), findTextArea(opened));
         assertTrue(Math.abs(opened.getBounds().getCenterX() - holder[0].getBounds().getCenterX()) < 30);
         assertTrue(Math.abs(opened.getBounds().getCenterY() - holder[0].getBounds().getCenterY()) < 30);
         JTextArea request = findEditableTextArea(opened);
         assertNotNull(request);
+        assertEquals("Pedido sugerido para teste.", request.getText());
         JButton reuse = findButton(opened, "Reutilizar sessão selecionada");
         assertNotNull(reuse);
         assertTrue(reuse.isEnabled());
@@ -420,6 +421,17 @@ class DashboardPreviewTest {
       if (child instanceof UsageGuide.FlowDiagram flow) return flow;
       if (child instanceof Container nested) {
         UsageGuide.FlowDiagram match = findFlowDiagram(nested);
+        if (match != null) return match;
+      }
+    }
+    return null;
+  }
+
+  private static JLabel findLabelContaining(Container parent, String text) {
+    for (Component child : parent.getComponents()) {
+      if (child instanceof JLabel label && label.getText().contains(text)) return label;
+      if (child instanceof Container nested) {
+        JLabel match = findLabelContaining(nested, text);
         if (match != null) return match;
       }
     }

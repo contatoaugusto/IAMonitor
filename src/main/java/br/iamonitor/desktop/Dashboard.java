@@ -88,7 +88,7 @@ final class Dashboard extends JFrame {
   private final Branding branding;
   private final CodexRunner runner;
   private JPanel sidebarPanel;
-  private final JButton presentationButton = button("Apresentar");
+  private final JButton presentationButton = button("Ampliar visão geral");
   private final DefaultListModel<Store.Run> runModel = new DefaultListModel<>();
   private final JList<Store.Run> runList = new JList<>(runModel);
   private final JLabel title = new JLabel("Nenhuma sessão selecionada");
@@ -308,10 +308,14 @@ final class Dashboard extends JFrame {
     actions.setLayout(new FlowLayout(FlowLayout.LEFT, 8, 3));
     actions.add(stopButton);
     actions.add(pdfButton);
+    JButton exploreButton = button("Explorar dados e simular");
+    exploreButton.setToolTipText("Abre eventos, origens, dados e simulação da sessão");
+    exploreButton.addActionListener(event -> workTabs.setSelectedIndex(1));
+    actions.add(exploreButton);
     presentationButton.addActionListener(event -> {
-      boolean presenting = sidebarPanel.isVisible();
-      sidebarPanel.setVisible(!presenting);
-      presentationButton.setText(presenting ? "Sair da apresentação" : "Apresentar");
+      boolean expanded = sidebarPanel.isVisible();
+      sidebarPanel.setVisible(!expanded);
+      presentationButton.setText(expanded ? "Restaurar painel" : "Ampliar visão geral");
       workTabs.setSelectedIndex(0);
       revalidate();
       repaint();
@@ -892,35 +896,22 @@ final class Dashboard extends JFrame {
     header.add(label("O monitor acompanha uma nova execução pela CLI oficial.", 12, Font.PLAIN, Color.WHITE));
     form.add(header, BorderLayout.NORTH);
 
-    JTextArea connection = new JTextArea();
-    connection.setEditable(false); connection.setLineWrap(true); connection.setWrapStyleWord(true);
-    connection.setBackground(ModalStyle.PAPER); connection.setForeground(ModalStyle.INK);
-    connection.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-    connection.setBorder(new EmptyBorder(12, 14, 12, 14));
-    connection.setFocusable(false);
-    JScrollPane connectionScroll = new JScrollPane(connection);
-    connectionScroll.setPreferredSize(new Dimension(600, 165));
-    connectionScroll.setMinimumSize(new Dimension(300, 165));
-    connectionScroll.setBorder(BorderFactory.createLineBorder(ModalStyle.BORDER));
+    JLabel connection = label("", 13, Font.PLAIN, ModalStyle.INK);
+    connection.setVerticalAlignment(JLabel.TOP);
+    Runnable showConnection = () -> {
+      String explanation = escape(Provider.sessionGuidance((String) provider.getSelectedItem()))
+          .replace("\n", "<br>");
+      connection.setText("<html>" + explanation + "</html>");
+    };
+    provider.addActionListener(event -> showConnection.run());
+    showConnection.run();
     JPanel connectionBlock = ModalStyle.panel();
-    connectionBlock.setLayout(new BorderLayout(0, 8));
+    connectionBlock.setLayout(new BorderLayout(0, 7));
     connectionBlock.add(label("LOGIN, ACESSO E MEDIÇÃO", 11, Font.BOLD, ModalStyle.ACCENT), BorderLayout.NORTH);
-    connectionBlock.add(connectionScroll, BorderLayout.CENTER);
-    provider.addActionListener(event -> {
-      connection.setText(Provider.explanation((String) provider.getSelectedItem()));
-      connection.setCaretPosition(0);
-    });
-    connection.setText(Provider.explanation((String) provider.getSelectedItem()));
-    connection.setCaretPosition(0);
+    connectionBlock.add(connection, BorderLayout.CENTER);
     JTextField project = new JTextField(current == null ? System.getProperty("user.dir") : current.run().project());
     styleInput(project);
     JButton browse = ModalStyle.button("Escolher pasta", false);
-    browse.addActionListener(event -> {
-      JFileChooser chooser = new JFileChooser(project.getText());
-      chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-      if (chooser.showOpenDialog(dialog) == JFileChooser.APPROVE_OPTION)
-        project.setText(chooser.getSelectedFile().getAbsolutePath());
-    });
     JPanel pathRow = ModalStyle.panel();
     pathRow.setLayout(new BorderLayout(9, 0));
     pathRow.add(project, BorderLayout.CENTER);
@@ -935,6 +926,51 @@ final class Dashboard extends JFrame {
     requestScroll.setBorder(BorderFactory.createLineBorder(ModalStyle.BORDER));
     requestScroll.setPreferredSize(new Dimension(600, 135));
     requestScroll.setMinimumSize(new Dimension(300, 105));
+    JLabel requestSource = label("Selecione uma pasta com pedido.txt ou escreva o pedido.", 11,
+        Font.PLAIN, ModalStyle.MUTED);
+    String[] loadedSuggestion = {null};
+    Runnable loadSuggestion = () -> {
+      String selectedFolder = project.getText().strip();
+      requestSource.setText("Procurando pedido.txt na pasta selecionada...");
+      new SwingWorker<String, Void>() {
+        @Override protected String doInBackground() throws Exception {
+          return PromptSuggestion.read(Path.of(selectedFolder));
+        }
+        @Override protected void done() {
+          if (!project.getText().strip().equals(selectedFolder) || !dialog.isDisplayable()) return;
+          try {
+            String suggestion = get();
+            if (suggestion == null) {
+              requestSource.setText("Sem pedido.txt nesta pasta. Escreva o pedido ou reutilize uma sessão.");
+            } else if (request.getText().isBlank() || request.getText().equals(loadedSuggestion[0])) {
+              request.setText(suggestion);
+              request.setCaretPosition(0);
+              loadedSuggestion[0] = suggestion;
+              requestSource.setText("Pedido carregado de pedido.txt da pasta selecionada. Revise antes de executar.");
+              requestSource.setToolTipText(Path.of(selectedFolder).resolve("pedido.txt").toString());
+            } else {
+              requestSource.setText("Seu pedido editado foi mantido; pedido.txt está disponível nesta pasta.");
+            }
+          } catch (Exception error) {
+            requestSource.setText("Não foi possível carregar pedido.txt. Escreva o pedido manualmente.");
+          }
+        }
+      }.execute();
+    };
+    browse.addActionListener(event -> {
+      JFileChooser chooser = new JFileChooser(project.getText());
+      chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+      if (chooser.showOpenDialog(dialog) == JFileChooser.APPROVE_OPTION) {
+        project.setText(chooser.getSelectedFile().getAbsolutePath());
+        loadSuggestion.run();
+      }
+    });
+    project.addActionListener(event -> loadSuggestion.run());
+    project.addFocusListener(new java.awt.event.FocusAdapter() {
+      @Override public void focusLost(java.awt.event.FocusEvent event) {
+        if (!event.isTemporary()) loadSuggestion.run();
+      }
+    });
 
     JTextField model = new JTextField();
     styleInput(model);
@@ -953,6 +989,8 @@ final class Dashboard extends JFrame {
       project.setText(sourceRun.project());
       request.setText(sourceRun.prompt());
       request.setCaretPosition(0);
+      loadedSuggestion[0] = null;
+      requestSource.setText("Pedido copiado da sessão selecionada. Revise antes de executar.");
       model.setText(sourceRun.model() == null ? "" : sourceRun.model());
       if ("read-only".equals(sourceRun.sandbox())) readPermission.setSelected(true);
       else writePermission.setSelected(true);
@@ -989,6 +1027,7 @@ final class Dashboard extends JFrame {
     requestHeading.setLayout(new BorderLayout(10, 0));
     requestHeading.add(label("PEDIDO PARA A IA", 11, Font.BOLD, ModalStyle.MUTED), BorderLayout.WEST);
     requestHeading.add(reuse, BorderLayout.EAST);
+    requestHeading.add(requestSource, BorderLayout.SOUTH);
     fields.add(requestHeading, c);
     c.gridy = 6; c.weighty = 1; c.fill = GridBagConstraints.BOTH; c.insets = new Insets(0, 0, 19, 0);
     fields.add(requestScroll, c);
@@ -1057,9 +1096,12 @@ final class Dashboard extends JFrame {
     footer.add(cancel); footer.add(execute);
     form.add(footer, BorderLayout.SOUTH);
     dialog.setContentPane(form);
-    dialog.setSize(860, 820);
-    dialog.setMinimumSize(new Dimension(700, 690));
+    int availableHeight = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment()
+        .getMaximumWindowBounds().height;
+    dialog.setSize(860, Math.min(920, availableHeight - 30));
+    dialog.setMinimumSize(new Dimension(700, Math.min(760, availableHeight - 30)));
     dialog.setLocationRelativeTo(this);
+    loadSuggestion.run();
     ModalStyle.show(this, dialog);
   }
 

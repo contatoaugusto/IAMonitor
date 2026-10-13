@@ -27,7 +27,7 @@ class DataTraceTest {
           """);
       record(store, id, """
           {"type":"item.completed","item":{"type":"file_change",
-           "changes":[{"path":"consumoTokensOnline/index.html","kind":"add"}]}}
+           "changes":[{"path":"cadastro/index.html","kind":"add"}]}}
           """);
       store.observeArtifacts(id, "Arquitetura.md", project);
       DataTrace.Snapshot snapshot = DataTrace.from(store.run(id), store.traceEvents(id),
