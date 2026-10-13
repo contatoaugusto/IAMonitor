@@ -24,7 +24,7 @@ if (Test-Path -LiteralPath $appExe) {
   return
 }
 
-$jar = Join-Path $PSScriptRoot 'target/iamonitor-desktop-1.0.0.jar'
+$jar = Join-Path $PSScriptRoot 'target/iamonitor-desktop-1.0.1.jar'
 $java = Get-Command java -ErrorAction SilentlyContinue
 if ($java -and (Test-Path -LiteralPath $jar)) {
   & $java.Source -jar $jar --data-dir $dataDirPath

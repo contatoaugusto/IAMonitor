@@ -59,7 +59,7 @@ final class CodexQuotaReader {
   private static List<Store.QuotaSnapshot> exchange(Process process, String phase) throws IOException {
     try (var writer = process.outputWriter(StandardCharsets.UTF_8);
          var reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
-      writer.write("{\"method\":\"initialize\",\"id\":1,\"params\":{\"clientInfo\":{\"name\":\"iamonitor\",\"title\":\"IAMonitor\",\"version\":\"1.0.0\"}}}\n");
+      writer.write("{\"method\":\"initialize\",\"id\":1,\"params\":{\"clientInfo\":{\"name\":\"iamonitor\",\"title\":\"IAMonitor\",\"version\":\"1.0.1\"}}}\n");
       writer.flush();
       response(reader, 1);
       writer.write("{\"method\":\"initialized\",\"params\":{}}\n");

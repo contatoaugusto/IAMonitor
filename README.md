@@ -26,7 +26,7 @@ Aplicativo Java para Windows do canal **Dev Terceira Idade**, de Antonio Augusto
 
 ## Baixar para Windows
 
-Na [página de versões do IAMonitor](https://github.com/contatoaugusto/IAMonitor/releases), baixe `IAMonitor-1.0.0-windows.zip`, extraia a pasta `IAMonitor` completa e abra `IAMonitor.exe`. Mantenha `app/` e `runtime/` ao lado do executável. Ao abrir o aplicativo extraído diretamente, as sessões novas ficam, por padrão, em `%LOCALAPPDATA%\IAMonitor\data`; `run.ps1` usa a pasta `data/` deste repositório. Para acompanhar uma IA real, instale e autentique a CLI correspondente na mesma conta do Windows. O código fonte e as instruções de compilação também estão neste repositório.
+Na [página de versões do IAMonitor](https://github.com/contatoaugusto/IAMonitor/releases), baixe `IAMonitor-1.0.1-windows.zip`, extraia a pasta `IAMonitor` completa e abra `IAMonitor.exe`. Mantenha `app/` e `runtime/` ao lado do executável. Ao abrir o aplicativo extraído diretamente, as sessões novas ficam, por padrão, em `%LOCALAPPDATA%\IAMonitor\data`; `run.ps1` usa a pasta `data/` deste repositório. Para acompanhar uma IA real, instale e autentique a CLI correspondente na mesma conta do Windows. O código fonte e as instruções de compilação também estão neste repositório.
 
 ## Estrutura
 
@@ -47,7 +47,7 @@ Abra o PowerShell nesta pasta e rode:
 
     .\run.ps1
 
-O script usa o aplicativo Windows indicado em `target/current-app.txt` (ou `target/package/IAMonitor/IAMonitor.exe` como alternativa), que inclui o runtime Java. A opção `-DataDir` permite escolher outra pasta para as sessões. Também é possível abrir o executável diretamente ou extrair `target/IAMonitor-1.0.0-windows.zip` em outro computador; mantenha as pastas `app` e `runtime` junto do executável.
+O script usa o aplicativo Windows indicado em `target/current-app.txt` (ou `target/package/IAMonitor/IAMonitor.exe` como alternativa), que inclui o runtime Java. A opção `-DataDir` permite escolher outra pasta para as sessões. Também é possível abrir o executável diretamente ou extrair `target/IAMonitor-1.0.1-windows.zip` em outro computador; mantenha as pastas `app` e `runtime` junto do executável.
 
 Antes da primeira sessão, instale a CLI da IA escolhida e faça login nela no PowerShell com a mesma conta do Windows usada para abrir o IAMonitor. Esse preparo pode ser feito em qualquer pasta. Para Codex e Claude Code, abra respectivamente `codex` ou `claude` e conclua o login; para Gemini CLI, abra `gemini` e escolha **Sign in with Google**; para Cursor Agent, execute `agent login`; para GitHub Copilot CLI, execute `copilot login`. Se a CLI já estiver autenticada, não é necessário repetir o login.
 
