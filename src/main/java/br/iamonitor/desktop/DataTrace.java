@@ -55,6 +55,7 @@ final class DataTrace {
   static String describe(Snapshot snapshot) {
     StringBuilder text = new StringBuilder();
     text.append("TRILHA DE DADOS DA SESSÃO\n\n");
+    text.append(FlowExplainer.describe(snapshot.run().provider())).append("\n\n");
     text.append("O que é comprovado aqui\n");
     text.append("• O pedido abaixo foi entregue pelo IAMonitor à CLI local.\n");
     text.append("• Os comandos, saídas e mudanças abaixo foram emitidos no fluxo estruturado da CLI.\n");

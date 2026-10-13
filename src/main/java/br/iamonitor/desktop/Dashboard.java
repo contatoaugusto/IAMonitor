@@ -909,6 +909,15 @@ final class Dashboard extends JFrame {
     connectionBlock.setLayout(new BorderLayout(0, 7));
     connectionBlock.add(label("LOGIN, ACESSO E MEDIÇÃO", 11, Font.BOLD, ModalStyle.ACCENT), BorderLayout.NORTH);
     connectionBlock.add(connection, BorderLayout.CENTER);
+    JButton flowHelp = ModalStyle.button("Entenda o fluxo local e remoto", false);
+    flowHelp.addActionListener(event -> DetailsDialog.open(dialog,
+        "Como a IA trabalha com este projeto", "Fluxo local e remoto",
+        "Explicação do provedor selecionado · limites da medição",
+        () -> FlowExplainer.describe((String) provider.getSelectedItem())));
+    JPanel flowHelpRow = ModalStyle.panel();
+    flowHelpRow.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+    flowHelpRow.add(flowHelp);
+    connectionBlock.add(flowHelpRow, BorderLayout.SOUTH);
     JTextField project = new JTextField(current == null ? System.getProperty("user.dir") : current.run().project());
     styleInput(project);
     JButton browse = ModalStyle.button("Escolher pasta", false);

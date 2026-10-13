@@ -14,7 +14,7 @@ if (-not $env:JAVA_HOME) {
   $jdk = Get-ChildItem -LiteralPath (Join-Path $targetRoot 'toolchain') -Directory -Filter 'jdk-*' -ErrorAction SilentlyContinue | Select-Object -First 1
   if ($jdk) { $env:JAVA_HOME = $jdk.FullName }
 }
-foreach ($name in @('iamonitor-desktop-1.0.1.jar', 'iamonitor-desktop-1.0.1-shaded.jar', 'original-iamonitor-desktop-1.0.1.jar')) {
+foreach ($name in @('iamonitor-desktop-1.0.2.jar', 'iamonitor-desktop-1.0.2-shaded.jar', 'original-iamonitor-desktop-1.0.2.jar')) {
   $jar = Join-Path $targetRoot $name
   if (Test-Path -LiteralPath $jar) { Remove-Item -LiteralPath $jar -Force }
 }
@@ -55,13 +55,13 @@ if ($AppImage) {
     }
   }
   New-Item -ItemType Directory -Force -Path $inputRoot,$packageRoot | Out-Null
-  Copy-Item -LiteralPath (Join-Path $targetRoot 'iamonitor-desktop-1.0.1.jar') -Destination $inputRoot
+  Copy-Item -LiteralPath (Join-Path $targetRoot 'iamonitor-desktop-1.0.2.jar') -Destination $inputRoot
   $jpackage = if ($env:JAVA_HOME -and (Test-Path -LiteralPath (Join-Path $env:JAVA_HOME 'bin/jpackage.exe'))) {
     Join-Path $env:JAVA_HOME 'bin/jpackage.exe'
   } else {
     (Get-Command jpackage -ErrorAction Stop).Source
   }
-  & $jpackage --type app-image --name IAMonitor --app-version 1.0.1 --input $inputRoot --main-jar 'iamonitor-desktop-1.0.1.jar' --dest $packageRoot
+  & $jpackage --type app-image --name IAMonitor --app-version 1.0.2 --input $inputRoot --main-jar 'iamonitor-desktop-1.0.2.jar' --dest $packageRoot
   if ($LASTEXITCODE -ne 0) { throw 'O empacotamento da aplicação falhou.' }
   $relativeExe = [IO.Path]::GetRelativePath($targetRoot, (Join-Path $imageRoot 'IAMonitor.exe'))
   [IO.File]::WriteAllText((Join-Path $targetRoot 'current-app.txt'), $relativeExe, [Text.UTF8Encoding]::new($false))
