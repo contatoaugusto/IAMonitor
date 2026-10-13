@@ -1,7 +1,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: Foco na execução em andamento
-O aplicativo MUST destacar a operação observada mais recente, seu detalhe, o tempo decorrido e os eventos enquanto a CLI está ativa, em uma visão principal legível para demonstração em vídeo.
+O aplicativo MUST destacar a operação observada mais recente, seu detalhe, o tempo decorrido e os eventos enquanto a CLI está ativa, em uma visão principal legível para apresentação de sessões.
 
 #### Scenario: Evento novo
 - **WHEN** chega uma operação durante uma sessão em execução
@@ -31,7 +31,7 @@ O aplicativo MUST apresentar na visão principal o estado da sessão, a operaç�
 - **WHEN** o usuário seleciona uma sessão concluída
 - **THEN** a visão mantém o resumo e permite abrir dados detalhados, simulação e exportação
 
-#### Scenario: Apresentação em vídeo
+#### Scenario: Modo de apresentação
 - **WHEN** o usuário ativa o modo de apresentação
 - **THEN** a barra lateral é ocultada, a visão geral se expande e o usuário pode voltar ao layout anterior sem interromper a sessão
 

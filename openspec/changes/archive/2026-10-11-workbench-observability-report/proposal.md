@@ -1,6 +1,6 @@
 ## Why
 
-A tela atual mistura execução, simulação, assinatura, tabelas e números com peso semelhante. Isso dificulta acompanhar uma tarefa em vídeo e entender de onde veio cada medida. O PDF também apresenta principalmente texto e listas, sem uma leitura visual das fases e dos fluxos observados.
+A tela atual mistura execução, simulação, assinatura, tabelas e números com peso semelhante. Isso dificulta acompanhar uma tarefa em tempo real e entender de onde veio cada medida. O PDF também apresenta principalmente texto e listas, sem uma leitura visual das fases e dos fluxos observados.
 
 ## What Changes
 

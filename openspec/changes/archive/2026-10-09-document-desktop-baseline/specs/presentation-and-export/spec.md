@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Oferecer um painel legível para demonstração em vídeo, com andamento da execução, explicação do ciclo de tokens, ajuda e exportação dos registros disponíveis.
+Oferecer um painel legível para apresentação de sessões, com andamento da execução, explicação do ciclo de tokens, ajuda e exportação dos registros disponíveis.
 
 ## ADDED Requirements
 

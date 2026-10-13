@@ -2,7 +2,7 @@
 
 ## Why
 
-O cartão de cada ciclo ainda concentra entrada, cache e saída em uma barra empilhada. Essa apresentação dificulta perceber quanto cada medida representa do total, especialmente durante uma demonstração em vídeo.
+O cartão de cada ciclo ainda concentra entrada, cache e saída em uma barra empilhada. Essa apresentação dificulta perceber quanto cada medida representa do total, especialmente durante uma apresentação de sessões.
 
 ## What Changes
 

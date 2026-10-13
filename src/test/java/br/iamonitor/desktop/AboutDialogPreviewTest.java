@@ -50,6 +50,7 @@ class AboutDialogPreviewTest {
       JDialog shown = dialog;
       SwingUtilities.invokeAndWait(() -> {
         assertNotNull(findLabel(shown, "Como o IAMonitor foi construído"));
+        assertNotNull(findLabel(shown, "contagens da aplicação"));
         assertNotNull(findButton(shown, "Arquitetura"));
         save(shown, Path.of("target/about-overview-preview.png"));
         findButton(shown, "Arquitetura").doClick();

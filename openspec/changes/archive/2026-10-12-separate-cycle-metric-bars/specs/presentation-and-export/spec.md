@@ -11,7 +11,7 @@ O aplicativo MUST mostrar estado, operação, contagem e gráficos de ciclos e a
 - **WHEN** o usuário seleciona uma sessão concluída
 - **THEN** a visão mantém o resumo e permite abrir dados detalhados, simulação e exportação
 
-#### Scenario: Apresentação em vídeo
+#### Scenario: Modo de apresentação
 - **WHEN** o usuário ativa o modo de apresentação
 - **THEN** a barra lateral é ocultada, a visão geral se expande e o usuário pode voltar ao layout anterior sem interromper a sessão
 

@@ -149,3 +149,12 @@ O aplicativo MUST distinguir o pedido entregue à CLI, os dados locais observado
 #### Scenario: Exportar PDF
 - **WHEN** o usuário exporta uma sessão com eventos locais
 - **THEN** o PDF resume evidências disponíveis e limite de observação remota, sem adicionar estimativas ao total de tokens
+
+### Requirement: Descrição geral da finalidade
+
+O aplicativo MUST apresentar sua finalidade como acompanhamento e medição de execuções de IA em projetos locais, sem vincular seu uso a um projeto específico.
+
+#### Scenario: Abrir a tela Sobre
+
+- **WHEN** o usuário abre a tela Sobre
+- **THEN** encontra uma descrição do acompanhamento de operações, arquivos identificados e contagens reportadas pela CLI

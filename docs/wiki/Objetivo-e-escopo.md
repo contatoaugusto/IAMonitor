@@ -27,7 +27,7 @@ O total de tokens **não equivale automaticamente** a dinheiro, créditos ou sal
 
 ## Para quem serve
 
-- **Criadores de conteúdo:** uma visão legível da atividade em tempo real para gravação e explicação em vídeo.
+- **Educadores e equipes:** uma visão legível da atividade em tempo real para estudo e explicação.
 - **Estudantes e pesquisadores:** exemplos concretos da diferença entre contagem reportada, artefatos observados e hipóteses.
 - **Desenvolvedores:** eventos JSONL, persistência SQLite, testes e specs para reproduzir e examinar o método.
 

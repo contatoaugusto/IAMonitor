@@ -95,7 +95,7 @@ final class DataTrace {
       text.append("• ").append(artifact.category()).append("  |  ").append(artifact.file())
           .append("  |  aprox. ").append(artifact.estimatedTokens())
           .append(" tokens locais, sem atribuição ao envio\n");
-    text.append("\nRevise esta tela, o JSONL e o PDF antes de mostrar uma sessão real em vídeo: ");
+    text.append("\nRevise esta tela, o JSONL e o PDF antes de compartilhar uma sessão: ");
     text.append("comandos e saídas podem conter código ou dados privados.\n");
     return text.toString();
   }

@@ -6,7 +6,7 @@
 
 ## Objetivos e limites
 
-- Priorizar leitura rápida do número de tokens por medida, inclusive em vídeo.
+- Priorizar leitura rápida do número de tokens por medida, inclusive durante apresentações.
 - Conservar um cartão por ciclo, o total reportado e o tratamento de uso ausente.
 - Não alterar cálculos, persistência ou relatório PDF.
 

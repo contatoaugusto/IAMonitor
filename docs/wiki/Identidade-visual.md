@@ -1,6 +1,6 @@
 # Identidade visual
 
-Esta documentação acompanha o canal **Dev Terceira Idade**, apresentado por **Antonio Augusto**, com a assinatura **“Do DOS ao deploy com IA”**. O IAMonitor é uma ferramenta de estudo ligada a esse universo; as páginas usam o símbolo de terminal, a paleta do kit de perfil e uma apresentação clara para leitura em tela e vídeo.
+Esta documentação acompanha o canal **Dev Terceira Idade**, apresentado por **Antonio Augusto**, com a assinatura **“Do DOS ao deploy com IA”**. O IAMonitor é uma ferramenta de estudo ligada a esse universo; as páginas usam o símbolo de terminal, a paleta do kit de perfil e uma apresentação clara para leitura em tela e na documentação.
 
 <p align="center"><img src="https://raw.githubusercontent.com/contatoaugusto/IAMonitor/main/docs/assets/logo-horizontal.svg" alt="Logo horizontal Dev Terceira Idade" width="680"></p>
 

@@ -70,7 +70,7 @@ final class AboutDialog {
     header.setBorder(new EmptyBorder(17, 25, 17, 25));
     header.add(label("AJUDA  /  SOBRE", 11, Font.BOLD, new Color(255, 216, 175)));
     header.add(label("Como o IAMonitor foi construído", 24, Font.BOLD, Color.WHITE));
-    header.add(label(Branding.load().name() + " · Arquitetura, tecnologias, decisões e contagens para apresentação em vídeo.",
+    header.add(label(Branding.load().name() + " · Arquitetura, tecnologias, decisões e contagens da aplicação.",
         13, Font.PLAIN, Color.WHITE));
     root.add(header, BorderLayout.NORTH);
 
@@ -138,7 +138,7 @@ final class AboutDialog {
     JPanel page = page("O aplicativo em uma frase",
         "Uma aplicação Java desktop que inicia uma nova tarefa em uma CLI de IA, acompanha seus eventos e apresenta os tokens que essa CLI efetivamente informa.");
     add(page, card("Para que foi criado",
-        "O objetivo é explicar em vídeo o percurso do pedido, mostrar operações e arquivos identificados e distinguir contagens reportadas de estimativas locais.", BLUE));
+        "O objetivo é acompanhar tarefas de IA em projetos, mostrar operações e arquivos identificados e distinguir contagens reportadas de estimativas locais.", BLUE));
     add(page, card("O que acontece ao executar",
         "Você escolhe IA, pasta, pedido e permissão. O IAMonitor abre a CLI oficial nessa pasta com o login que a própria CLI já possui. Ele acompanha a saída estruturada da nova execução, registra eventos e exibe o resultado.", ModalStyle.ACCENT));
     add(page, card("O que o número principal significa",
