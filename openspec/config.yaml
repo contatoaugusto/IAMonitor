@@ -1,0 +1,30 @@
+schema: spec-driven
+
+context: |
+  Projeto Java 21 desktop para Windows, com interface Swing e testes JUnit.
+  Escreva propostas, specs, decisões e tarefas em português do Brasil.
+  Trate data/ como dados pessoais locais: preserve-a e não copie conteúdo de sessões para specs.
+  Especifique somente o que o código implementa ou o que a mudança propõe implementar.
+  Contagens reportadas por CLIs, estimativas locais e consumo da assinatura são grandezas distintas.
+
+rules:
+  proposal:
+    - Identifique as capacidades afetadas e o resultado observável para o usuário.
+  specs:
+    - Use uma spec por capacidade e cenários verificáveis para cada comportamento alterado.
+    - Distinga contagem reportada, estimativa e informação indisponível.
+  design:
+    - Registre cada decisão técnica relevante, sua justificativa e as alternativas consideradas.
+    - Cite classes, arquivos e formatos de dados afetados quando conhecidos.
+  tasks:
+    - Inclua implementação, testes focados e validação do resultado em tarefas separadas.
+
+operations:
+  apply:
+    guidance:
+      - Atualize as tarefas à medida que a implementação e os testes forem concluídos.
+      - Execute os testes Java antes de marcar a mudança como concluída.
+  archive:
+    guidance:
+      - Confira se as specs finais descrevem o comportamento realmente entregue.
+      - Preserve proposal.md, design.md, tasks.md e deltas no histórico da mudança.

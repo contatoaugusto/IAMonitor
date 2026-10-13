@@ -1,0 +1,50 @@
+name: Publicar Wiki
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - docs/wiki/**
+      - .github/workflows/publicar-wiki.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ler documentação versionada
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Sincronizar páginas com o Wiki
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          wiki_url="https://github.com/${GITHUB_REPOSITORY}.wiki.git"
+          auth_header="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          wiki_dir="$(mktemp -d)"
+
+          if ! git -c "http.extraheader=$auth_header" clone "$wiki_url" "$wiki_dir"; then
+            mkdir -p "$wiki_dir"
+            git -C "$wiki_dir" init -b master
+            git -C "$wiki_dir" remote add origin "$wiki_url"
+          fi
+
+          cp docs/wiki/*.md "$wiki_dir/"
+          git -C "$wiki_dir" config user.name 'github-actions[bot]'
+          git -C "$wiki_dir" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C "$wiki_dir" add -- '*.md'
+
+          if git -C "$wiki_dir" diff --cached --quiet; then
+            echo 'Wiki já contém esta versão das páginas.'
+            exit 0
+          fi
+
+          git -C "$wiki_dir" commit -m "docs: sincroniza Wiki do IAMonitor"
+          git -C "$wiki_dir" -c "http.extraheader=$auth_header" push origin HEAD

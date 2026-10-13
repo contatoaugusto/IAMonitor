@@ -1,0 +1,6 @@
+data/
+target/
+dependency-reduced-pom.xml
+*.log
+docs/video/
+apresentação/
